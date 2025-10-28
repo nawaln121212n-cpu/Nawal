@@ -1,120 +1,235 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>الملف التعريفي | المعلمة نوال صالح علي الصقور</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<style>
-:root{ /* Baby-blue palette */
-  --bg:#f3f9ff; --card:#ffffff; --ink:#1f2937; --muted:#64748b;
-  --brand:#5aa9ff; --brand-2:#cfe8ff; --line:#e1efff; --accent:#edf6ff;
-}
-*{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',sans-serif}
-html{scroll-behavior:smooth}
-a{color:var(--brand);text-decoration:none}
-.container{max-width:1100px;margin:0 auto;padding:0 18px}
 
-/* Topbar */
-.topbar{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line)}
+<style>
+/* =========================
+   THEME — Baby Blue + White
+   ========================= */
+:root{
+  --bg:        #f3f9ff;        /* page background */
+  --ink:       #0f172a;        /* main text (slate-900) */
+  --muted:     #64748b;        /* secondary text */
+  --brand:     #5aa9ff;        /* baby blue (primary) */
+  --brand-2:   #cfe8ff;        /* pale blue */
+  --accent:    #eaf4ff;        /* very light blue fill */
+  --line:      #e3f0ff;        /* soft divider */
+  --card:      #ffffff;        /* white card */
+  --shadow-1:  0 6px 18px rgba(33,86,160,.10);
+  --shadow-2:  0 12px 32px rgba(33,86,160,.12);
+  --radius-lg: 18px;
+  --radius-md: 14px;
+}
+
+/* Base */
+*{box-sizing:border-box}
+html,body{
+  margin:0; background:
+    radial-gradient(60vw 60vw at 10% -10%, #e6f3ff 0%, transparent 55%),
+    radial-gradient(70vw 60vw at 110% 10%, #f2f8ff 0%, transparent 55%),
+    var(--bg);
+  color:var(--ink);
+  font-family:'Cairo',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+}
+a{color:#1e66d1;text-decoration:none}
+.container{max-width:1100px;margin:0 auto;padding:0 18px}
+html{scroll-behavior:smooth}
+
+/* Soft blobs */
+.bg-orb{position:fixed; inset:0; pointer-events:none; z-index:-1; filter:blur(60px); opacity:.45}
+.bg-orb::before,.bg-orb::after{
+  content:""; position:absolute; border-radius:999px;
+  width:48vw; height:48vw;
+  background:radial-gradient(circle at 35% 35%, #d8ecff 0%, transparent 62%);
+  transform:translate(-25%,-30%);
+  animation:float1 14s ease-in-out infinite alternate;
+}
+.bg-orb::after{
+  right:-10%; bottom:-10%; width:50vw; height:50vw; transform:none;
+  background:radial-gradient(circle at 70% 70%, #eaf4ff 0%, transparent 62%);
+  animation:float2 16s ease-in-out infinite alternate;
+}
+@keyframes float1{to{transform:translate(-18%,-18%)}}
+@keyframes float2{to{transform:translate(6%,-4%)}}
+
+/* Topbar — light glass */
+.topbar{
+  position:sticky; top:0; z-index:60;
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.65));
+  backdrop-filter:saturate(1.1) blur(10px);
+  border-bottom:1px solid var(--line);
+}
 .topbar .row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:10px 0}
-.brand{font-weight:800;color:#225e9b}
-.menu{display:none !important}
-.lang-switch button,.login-btn,.nav-btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}
-.lang-switch .secondary{background:#fff;color:#225e9b;border:1px solid var(--brand)}
-#sectionsBtn{background:#fff;color:#225e9b;border:1px solid var(--line)}
-#sectionsPanel{position:fixed;inset-inline-end:16px;top:62px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 30px rgba(0,0,0,.12);padding:10px;display:none;z-index:80;max-height:60vh;overflow:auto;min-width:230px}
-#sectionsPanel a{display:flex;align-items:center;gap:10px;padding:10px;border-radius:10px;color:#225e9b}
-#sectionsPanel a i{color:#3b82f6}
-#sectionsPanel a:hover{background:#edf6ff}
+.brand{font-weight:800; letter-spacing:.3px; color:#0f2657}
+.brand .dot{color:#3898ff}
+.lang-switch button,.login-btn,.nav-btn{
+  background:linear-gradient(135deg, #e9f3ff, #ffffff);
+  color:#0f2657; border:1px solid var(--line); border-radius:12px; padding:8px 12px; font-weight:800; cursor:pointer;
+  box-shadow:var(--shadow-1)
+}
+.lang-switch .secondary{background:#ffffff}
+#sectionsBtn{background:#ffffff;color:#1359b0;border:1px solid var(--line)}
+
+/* Sections panel */
+#sectionsPanel{
+  position:fixed; inset-inline-end:16px; top:62px; background:#ffffffE6;
+  border:1px solid var(--line); border-radius:14px; backdrop-filter:blur(8px);
+  box-shadow:var(--shadow-2); padding:10px; display:none; z-index:80;
+  max-height:60vh; overflow:auto; min-width:240px
+}
+#sectionsPanel a{display:flex;align-items:center;gap:10px;padding:12px;border-radius:10px;color:#1359b0}
+#sectionsPanel a i{color:#1e66d1}
+#sectionsPanel a:hover{background:#f0f7ff}
 
 /* Hero */
-.hero{background:linear-gradient(145deg,#dff0ff,#f4fbff); padding:42px 0}
-.hero-card{background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.05);padding:26px}
-.hero-card h1{margin:0 0 6px;font-size:34px;color:#1e3a8a}
-.hero-card h2{margin:0 0 12px;font-size:18px;color:#2563eb}
+.hero{padding:56px 0 36px}
+.hero-card{
+  position:relative; border:1px solid var(--line); border-radius:22px;
+  background:linear-gradient(180deg, #ffffff, #fbfdff);
+  box-shadow:var(--shadow-2); padding:30px; overflow:hidden;
+}
+.hero-card::after{
+  content:""; position:absolute; inset:auto -10% -12px -10%; height:8px;
+  background:linear-gradient(90deg, #5aa9ff, #9fd0ff, #bfe0ff);
+  filter:blur(5px); opacity:.7;
+}
+.hero-card h1{margin:0 0 6px; font-size:36px; color:#0d2b66}
+.hero-card h2{margin:0 0 14px; font-size:18px; color:#2a78e0}
 .cta{display:flex;gap:10px;flex-wrap:wrap}
-.btn{background:var(--brand);color:#fff;border:none;border-radius:10px;padding:10px 14px;font-weight:700;cursor:pointer}
-.btn.secondary{background:#fff;color:#225e9b;border:1px solid var(--brand)}
-.btn.ghost{background:transparent;color:#225e9b;border:1px dashed var(--brand)}
+.btn{
+  background:linear-gradient(135deg, #5aa9ff, #9fd0ff);
+  color:#07244f; border:none; border-radius:12px; padding:10px 14px; font-weight:800; cursor:pointer;
+  box-shadow:0 8px 22px rgba(90,169,255,.24);
+  transition:transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+}
+.btn:hover{transform:translateY(-2px); box-shadow:0 12px 30px rgba(31,102,209,.22)}
+.btn.secondary{
+  background:#ffffff; color:#0f2657; border:1px solid var(--line); box-shadow:var(--shadow-1)
+}
+.btn.ghost{background:#ffffff; color:#2a78e0; border:1px dashed #a8d3ff}
 
-/* Sections */
-section{background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.04);padding:28px;margin:26px auto;scroll-margin-top:86px}
-section h3{margin-top:0;color:#225e9b;border-right:6px solid var(--brand-2);padding-right:10px}
-.lead{font-size:18px;line-height:1.9}
+/* Section cards */
+section{
+  border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  background:var(--card);
+  box-shadow:var(--shadow-1);
+  padding:26px; margin:26px auto; scroll-margin-top:86px;
+}
+.section-head{display:flex; align-items:center; gap:12px; margin:0 0 8px;}
+.section-head .badge{
+  display:inline-grid; place-items:center; width:36px; height:36px; border-radius:12px;
+  background:linear-gradient(135deg, #5aa9ff, #9fd0ff); color:#08305f;
+  box-shadow:0 6px 16px rgba(32,123,230,.25);
+}
+section h3{margin:0; color:#0d2b66}
+.lead{font-size:18px; line-height:1.9; color:#0f172a}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
 @media(max-width:860px){.two-col{grid-template-columns:1fr}}
+
+/* Dividers */
+.rib{height:1px; background:linear-gradient(90deg, transparent, #e7f2ff, transparent); margin:18px 0}
 
 /* Gallery */
 .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .gallery .item{position:relative}
-.gallery img{width:100%;height:100%;aspect-ratio:3/2;object-fit:cover;border-radius:12px;border:1px solid var(--line);box-shadow:0 6px 18px rgba(0,0,0,.05);transition:transform .25s ease;cursor:zoom-in}
-.gallery img:hover{transform:scale(1.03)}
+.gallery img{
+  width:100%; height:100%; aspect-ratio:3/2; object-fit:cover; border-radius:14px;
+  border:1px solid var(--line); box-shadow:0 10px 22px rgba(39,103,187,.10);
+  transition:transform .2s ease, box-shadow .2s ease; cursor:zoom-in
+}
+.gallery img:hover{transform:translateY(-3px); box-shadow:0 14px 28px rgba(39,103,187,.16)}
 .card-actions{position:absolute;top:8px;inset-inline-end:8px;display:flex;gap:6px}
-.icon-btn{background:rgba(255,255,255,.9);border:1px solid var(--line);border-radius:8px;padding:6px;cursor:pointer}
+.icon-btn{
+  background:#ffffff; border:1px solid var(--line); border-radius:10px; padding:6px; cursor:pointer; color:#0f2657;
+  box-shadow:0 6px 14px rgba(0,0,0,.06)
+}
 
 /* Videos */
 .videos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.video-card{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 6px 18px rgba(0,0,0,.05);padding:12px;position:relative}
-.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:8px;overflow:hidden;background:#000}
+.video-card{
+  background:#ffffff; border:1px solid var(--line); border-radius:16px; box-shadow:0 10px 22px rgba(39,103,187,.10);
+  padding:12px; position:relative
+}
+.video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
 .video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;cursor:pointer}
 @media (max-width:900px){.videos-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.videos-grid{grid-template-columns:1fr}}
 
 /* Skills */
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
-.skill{background:#f0f7ff;border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center;min-height:170px;display:flex;flex-direction:column;justify-content:center;gap:8px}
-.skill i{color:#2563eb;font-size:26px}
+.skill{
+  background:linear-gradient(180deg, #ffffff, #f8fbff);
+  border:1px solid var(--line); border-radius:16px; padding:18px; text-align:center; min-height:170px;
+  display:flex; flex-direction:column; justify-content:center; gap:8px
+}
+.skill i{color:#2a78e0;font-size:26px}
 .skill h4{margin:0;font-size:18px}
-.skill p{margin:0;color:#555}
+.skill p{margin:0;color:#374151}
 @media (max-width:900px){.skills-grid{grid-template-columns:repeat(2,1fr)}}
 @media (max-width:560px){.skills-grid{grid-template-columns:1fr}}
 
 /* CV */
 .cv-grid{display:grid;grid-template-columns:1fr 2fr;gap:16px}
-.cv-card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
-.cv-card h4{margin:0 0 8px;color:#225e9b}
+.cv-card{
+  background:linear-gradient(180deg, #ffffff, #fbfdff);
+  border:1px solid var(--line); border-radius:16px; padding:16px
+}
+.cv-card h4{margin:0 0 8px;color:#0d2b66}
 .cv-card ul{margin:0;padding-inline-start:18px}
-
-/* Pretty credential cards */
 .cv-card .kvs{list-style:none;margin:0;padding:0;display:grid;gap:12px}
-.cv-card .kvs li{background:#eef6ff;border:1px solid var(--line);border-radius:12px;padding:12px}
-.cv-card .kvs .tag{font-weight:800;margin-inline-end:8px}
-.cv-card .kvs .meta{display:block;color:#555;margin-top:6px}
+.cv-card .kvs li{background:#f5faff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.cv-card .kvs .tag{font-weight:800;margin-inline-end:8px;color:#2a78e0}
+.cv-card .kvs .meta{display:block;color:#334155;margin-top:6px}
 
 /* Footer */
-footer{background:#daf0ff;border-top:1px solid var(--line);text-align:center;padding:18px;color:#1e3a8a;font-weight:700}
-footer .en{font-family:'Poppins',sans-serif;font-weight:500;color:#444}
+footer{
+  background:linear-gradient(180deg, #ffffff, #f7fbff);
+  border-top:1px solid var(--line); text-align:center; padding:18px; color:#0d2b66; font-weight:700
+}
+footer .en{font-family:'Poppins',sans-serif;font-weight:600;color:#334155}
 
 /* Language */
 .lang-ar [data-en], .lang-en [data-ar]{display:none}
 .lang-en{direction:ltr;font-family:'Poppins',sans-serif}
-.lang-en section h3{border-right:none;border-left:6px solid var(--brand-2);padding-left:10px}
 
 /* Lightbox */
-#overlay{position:fixed;inset:0;background:rgba(0,0,0,.82);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
+#overlay{position:fixed;inset:0;background:rgba(0,22,61,.55);display:none;align-items:center;justify-content:center;padding:16px;z-index:100}
 #overlay.show{display:flex}
 #overlay .box{max-width:95vw;max-height:92vh}
-#overlay img,#overlay video{max-width:95vw;max-height:90vh;object-fit:contain;background:#000;border-radius:10px}
+#overlay img,#overlay video{max-width:95vw;max-height:90vh;object-fit:contain;background:#000;border-radius:12px;border:1px solid #d8e8ff}
 #overlay .close{position:absolute;top:10px;inset-inline-end:14px;color:#fff;font-size:30px;cursor:pointer}
 
 /* Utility */
 .toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:center;justify-content:center;z-index:200}
-.modal .panel{background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:20px;min-width:320px;max-width:90vw}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.25);display:none;align-items:center;justify-content:center;z-index:200}
+.modal .panel{
+  background:linear-gradient(180deg, #ffffff, #fbfdff);
+  border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow-2); padding:20px; min-width:320px; max-width:90vw
+}
 .modal.show{display:flex}
-.input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+.input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:#ffffff;color:#0f172a}
 
-/* ===== Mobile header polish (fix crowding on small phones) ===== */
+/* ==== AUTH VISIBILITY ==== */
+.auth-only{display:none}
+body.auth-on .auth-only{display:flex}
+.guest-only{display:flex}
+body.auth-on .guest-only{display:none}
+
+/* Responsive */
 @media (max-width: 680px){
   .topbar .row{grid-template-columns:auto 1fr;gap:8px}
   .brand{font-size:18px;max-width:48vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .lang-switch{display:flex;gap:6px;flex-wrap:nowrap;overflow:hidden}
-  .lang-switch button,.login-btn,.nav-btn{padding:6px 10px;font-size:12px;border-radius:8px;white-space:nowrap}
+  .lang-switch button,.login-btn,.nav-btn{padding:6px 10px;font-size:12px;border-radius:10px;white-space:nowrap}
 }
 @media (max-width: 520px){
   .topbar .row{grid-template-columns:1fr;row-gap:8px;align-items:start}
@@ -126,89 +241,107 @@ footer .en{font-family:'Poppins',sans-serif;font-weight:500;color:#444}
   #sectionsBtn span{display:none}
   #sectionsBtn{padding-inline:8px}
 }
-
-/* ===== Rest of responsive polish ===== */
 @media (max-width: 1100px){ .container{padding:0 14px} }
 @media (max-width: 560px){
-  #sectionsPanel{
-    inset:0; top:auto; bottom:0; border-radius:16px 16px 0 0;
-    min-width:auto; max-height:75vh; padding:12px; border:0;
-    box-shadow:0 -8px 24px rgba(0,0,0,.14)
-  }
-  #sectionsPanel a{padding:14px}
-}
-@media (max-width: 680px){
-  .hero{padding:28px 0}
-  .hero-card{padding:18px}
-  .hero-card h1{font-size:clamp(22px, 7vw, 34px)}
-  .hero-card h2{font-size:clamp(14px, 3.8vw, 18px)}
-}
-@media (max-width: 560px){ .cta .btn{flex:1 1 100%; text-align:center} }
-@media (max-width: 680px){
-  .lead{font-size:clamp(14px, 4vw, 18px); line-height:1.9}
+  #sectionsPanel{inset:0; top:auto; bottom:0; border-radius:16px 16px 0 0; min-width:auto; max-height:75vh; padding:12px; border:0; box-shadow:0 -8px 24px rgba(0,0,0,.12)}
+  .cta .btn{flex:1 1 100%; text-align:center}
   section{padding:18px; margin:18px auto}
+  .gallery{grid-template-columns:1fr}
+  .videos-grid{grid-template-columns:1fr}
+  .skills-grid{grid-template-columns:1fr}
+}
+@media (min-width: 981px){
+  .gallery{grid-template-columns:repeat(3,1fr)}
+  .videos-grid{grid-template-columns:repeat(3,1fr)}
+  .skills-grid{grid-template-columns:repeat(4,1fr)}
 }
 @media (max-width: 980px){
   .gallery{grid-template-columns:repeat(2,1fr)}
   .videos-grid{grid-template-columns:repeat(2,1fr)}
   .skills-grid{grid-template-columns:repeat(2,1fr)}
 }
-@media (max-width: 560px){
-  .gallery{grid-template-columns:1fr}
-  .videos-grid{grid-template-columns:1fr}
-  .skills-grid{grid-template-columns:1fr}
-  .gallery img{height:auto}
-  .video-wrap{aspect-ratio:16/9}
-  .icon-btn{padding:8px}
-}
-@media (max-width: 900px){ .cv-grid{grid-template-columns:1fr} }
-@media (max-width: 560px){
-  .modal{padding:16px}
-  .modal .panel{min-width:auto; max-width:min(92vw, 520px)}
-  .input{font-size:16px}
-}
-@media (min-width: 981px){
-  body .gallery{grid-template-columns:repeat(3,1fr) !important;}
-  body .videos-grid{grid-template-columns:repeat(3,1fr) !important;}
-  body .skills-grid{grid-template-columns:repeat(4,1fr) !important;}
-}
-@media (max-width: 980px){
-  body .gallery{grid-template-columns:repeat(2,1fr) !important;}
-  body .videos-grid{grid-template-columns:repeat(2,1fr) !important;}
-  body .skills-grid{grid-template-columns:repeat(2,1fr) !important;}
-}
-@media (max-width: 560px){
-  body .gallery{grid-template-columns:1fr !important;}
-  body .videos-grid{grid-template-columns:1fr !important;}
-  body .skills-grid{grid-template-columns:1fr !important;}
-  .gallery img{width:100% !important;height:auto !important;}
-}
-@media (max-width: 420px){
-  .lang-switch{flex-wrap:wrap !important; gap:6px !important;}
-  .lang-switch button,.login-btn,.nav-btn{font-size:12px !important; padding:6px 8px !important;}
-  #sectionsBtn span{display:none}
-  #sectionsBtn{padding-inline:8px}
-}
 section ul{padding-inline-start:1.2em}
 section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
+/* ===== CV readability fixes (Arabic-friendly) ===== */
+#cv .cv-grid{
+  display:grid;
+  grid-template-columns: 1.2fr 1.8fr; /* wider text column so lines don't wrap oddly */
+  gap:18px;
+}
+@media (max-width: 900px){ #cv .cv-grid{ grid-template-columns:1fr } }
+
+#cv .cv-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px 18px;
+}
+
+#cv .cv-card h4{ margin:0 0 10px; color:#225e9b }
+
+/* Stop the global 'anywhere' wrapping inside CV */
+#cv .cv-card li,
+#cv .cv-card p{
+  line-height:1.9;
+  white-space:normal;
+  word-break:normal;          /* keep whole words */
+  overflow-wrap:normal;       /* override section li { overflow-wrap:anywhere } */
+  -ms-word-break: normal;
+}
+
+/* Lists look tidy and aligned */
+#cv .cv-card ul{
+  list-style: disc;
+  list-style-position: inside;
+  margin:0;
+  padding:0;
+}
+
+/* Pretty “courses & certificates” cards */
+#cv .kvs{
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:grid;
+  gap:12px;
+}
+#cv .kvs li{
+  background:#f3f8ff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+#cv .kvs .tag{ font-weight:800; margin-inline-end:8px }
+#cv .kvs .meta{ display:block; color:#555; margin-top:6px }
+
+/* Direction-aware alignment */
+.lang-ar #cv .cv-card,
+.lang-ar #cv .cv-card ul,
+.lang-ar #cv .cv-card li{ direction:rtl; text-align:right }
+
+.lang-en #cv .cv-card,
+.lang-en #cv .cv-card ul,
+.lang-en #cv .cv-card li{ direction:ltr; text-align:left }
+
 </style>
 </head>
 <body class="lang-ar">
+<div class="bg-orb"></div>
 
 <!-- Topbar -->
 <div class="topbar">
   <div class="container row">
     <div class="brand">
-      <span data-ar>المعلمة نوال الصقور</span>
-      <span data-en>Teacher Nawal Alsaqoor</span>
+      <span data-ar>المعلمة نوال الصقور<span class="dot"> •</span></span>
+      <span data-en>Teacher Nawal Alsaqoor<span class="dot"> •</span></span>
     </div>
-    <div class="menu" id="menu"></div>
+    <div></div>
     <div class="lang-switch" style="display:flex;gap:8px;align-items:center">
       <button id="sectionsBtn" class="nav-btn"><i class="fa-solid fa-list"></i> <span data-ar>القائمة</span><span data-en>Sections</span></button>
       <button class="secondary" id="to-ar">العربية</button>
       <button id="to-en">English</button>
-      <button id="loginBtn" class="login-btn" title="تسجيل الدخول"><i class="fa-solid fa-user"></i></button>
-      <button id="logoutBtn" class="login-btn" style="display:none" title="تسجيل الخروج"><i class="fa-solid fa-right-from-bracket"></i></button>
+      <button id="loginBtn" class="login-btn guest-only" title="تسجيل الدخول"><i class="fa-solid fa-user"></i></button>
+      <button id="logoutBtn" class="login-btn auth-only" title="تسجيل الخروج"><i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
   </div>
 </div>
@@ -225,7 +358,7 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
       <h2 data-ar>معلمة لغة إنجليزية – الصفوف الأولية</h2>
       <h2 data-en>Early Primary English Teacher</h2>
       <div class="cta">
-        <a class="btn" href="#gallery" data-ar>معرض الأعمال والصور</a>
+        <a class="btn" href="#gallery" data-ar>معرض الصور</a>
         <a class="btn" href="#gallery" data-en>Photo Gallery</a>
         <a class="btn secondary" href="#about" data-ar>نبذة مختصرة</a>
         <a class="btn secondary" href="#about" data-en>About</a>
@@ -237,36 +370,47 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 <main class="container">
 
 <section id="about">
-  <h3 data-ar><i class="fa-solid fa-book-open"></i> نبذة تعريفية</h3>
-  <h3 data-en><i class="fa-solid fa-book-open"></i> About</h3>
-  <p class="lead" data-ar>معلمة لغة إنجليزية متخصصة في تأسيس مهارات القراءة والكتابة لطلاب الصفوف الأولية، أُعزّز الثقة وحب التعلّم عبر أساليب تفاعلية ممتعة وتدرّج مدروس في المهارات اللغوية.</p>
-  <p class="lead" data-en>Early-grade English teacher focused on literacy foundations—building confidence and love of learning through joyful, interactive methods and carefully sequenced skills.</p>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-book-open"></i></div>
+    <h3 data-ar>نبذة تعريفية</h3>
+    <h3 data-en>About</h3>
+  </div>
+  <p class="lead" data-ar>معلمة لغة إنجليزية متخصصة في تأسيس مهارات القراءة والكتابة لطلاب الصفوف الأولية؛ أُنمّي الثقة وحبّ التعلّم بطرائق تفاعلية ممتعة وتدرّج مدروس في المهارات.</p>
+  <p class="lead" data-en>Early-grade English teacher focused on literacy foundations—nurturing confidence and love of learning through engaging, interactive methods and carefully sequenced skills.</p>
 </section>
 
 <section id="intro">
-  <h3 data-ar>المقدّمة</h3>
-  <h3 data-en>Introduction</h3>
-  <p class="lead" data-ar>الحمد لله الذي علَّم بالقلم، علَّم الإنسان ما لم يعلم، والصلاة والسلام على أشرف الأنبياء والمرسلين، نبينا محمد، وعلى آله وصحبه أجمعين. بعد حمد الله وتوفيقه، وضعتُ هذا الملف ليكون توثيقًا للجهد التربوي/التعليمي خلال العام الدراسي، حيث يهدف إلى إبراز إنجازاتي وممارساتي المهنية، ويشتمل على شواهد متنوعة من المدرسة وبيئة الصف وغيرهما، ليكون مرجعًا شاملًا لإبراز الجهود المبذولة في التعليم، ومؤشرًا على التطوير المهني. لقد سعيتُ في هذا العمل إلى تقديم صورة متكاملة تعكس اهتمامي بالمتعلم/الطالبة، وتنمية مهاراته/ا المعرفية والسلوكية والقيمية، عبر استراتيجيات تدريس فعّالة، وتقويم بنّاء، وبيئة صفية جاذبة ومحفزة على الإبداع والتفكير، مع مراعاة الفروق الفردية، وتحقيق مبدأ التعلّم النشط. وأسأل الله أن يكون هذا العمل المتواضع صادقًا لوجهه الكريم، وأن يساهم بخطوة نحو مزيد من التطور والإبداع في المسيرة التربوية، بما يحقق أهداف التعليم، ويسهم في إعداد جيلٍ قادرٍ على صناعة المستقبل وفق رؤية المملكة 2030.</p>
-  <p class="lead" data-en>This portfolio documents professional efforts across the school year and showcases evidence from school and classroom environments, reflecting continuous professional development aligned with Saudi Vision 2030.</p>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-paragraph"></i></div>
+    <h3 data-ar>المقدمة</h3><h3 data-en>Introduction</h3>
+  </div>
+  <p class="lead" data-ar>الحمد لله الذي علَّم بالقلم… هذا الملف يوثّق جهودي التعليمية خلال العام الدراسي، ويبرز الممارسات المهنية والأدلة الصفية والمدرسية، ويعكس التطوير المهني المتواصل بما ينسجم مع رؤية 2030.</p>
+  <p class="lead" data-en>This portfolio documents my professional efforts across the school year and highlights classroom and school-based evidence, reflecting continuous professional growth aligned with Vision 2030.</p>
 </section>
 
 <section id="vision">
-  <h3 data-ar>الرؤية</h3>
-  <h3 data-en>Vision</h3>
-  <p class="lead" data-ar>تحقيق تعليم نوعي وتفاعلي يرتقي بمستوى الطلاب معرفيًا وسلوكيًا، من خلال بيئةٍ تعليميةٍ جاذبةٍ ومحفِّزة تعتمد على الابتكار والتقنية الحديثة، واستراتيجيات التدريس الفاعلة؛ بما يسهم في بناء جيل واعٍ، مبدع، وقادر على تحقيق أهداف رؤية المملكة 2030.</p>
-  <p class="lead" data-en>Deliver high-quality, interactive learning in an engaging, innovative, tech-enabled environment that builds an aware and creative generation capable of achieving Vision 2030.</p>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-eye"></i></div>
+    <h3 data-ar>الرؤية</h3><h3 data-en>Vision</h3>
+  </div>
+  <p class="lead" data-ar>تعليم تفاعلي عالي الجودة في بيئة محفّزة مبتكرة، ينهض بالطلبة معرفيًا وسلوكيًا، ويصنع جيلًا واعيًا مبدعًا قادرًا على مواكبة رؤية المملكة 2030.</p>
+  <p class="lead" data-en>High-quality, interactive learning in an inspiring, innovative environment that empowers students to thrive and contribute to Vision 2030.</p>
 </section>
 
 <section id="mission">
-  <h3 data-ar>الرسالة</h3>
-  <h3 data-en>Mission</h3>
-  <p class="lead" data-ar>الالتزام بتقديم تعليمٍ متميّزٍ وشاملٍ يعزّز من قدرات الطلاب العلمية والمهارية، ويحـفّزهم على التفكير الإبداعي والاستقلالية.</p>
-  <p class="lead" data-en>Provide outstanding, inclusive teaching that strengthens academic and practical skills and inspires creative, independent thinking.</p>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-bullseye"></i></div>
+    <h3 data-ar>الرسالة</h3><h3 data-en>Mission</h3>
+  </div>
+  <p class="lead" data-ar>تقديم تعليم شامل ومتميز يعزّز المهارات الأكاديمية والعملية ويغرس التفكير الإبداعي والاستقلالية.</p>
+  <p class="lead" data-en>Provide inclusive, excellent teaching that strengthens academic and practical skills and cultivates creative, independent thinking.</p>
 </section>
 
 <section id="values">
-  <h3 data-ar>القيم</h3>
-  <h3 data-en>Values</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-gem"></i></div>
+    <h3 data-ar>القيم</h3><h3 data-en>Values</h3>
+  </div>
   <ul>
     <li data-ar>الإخلاص والمسؤولية المهنية</li><li data-en>Sincerity & Professional Responsibility</li>
     <li data-ar>التعاون وروح الفريق</li><li data-en>Collaboration & Teamwork</li>
@@ -275,62 +419,77 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 </section>
 
 <section id="goals">
-  <h3 data-ar>أهداف التعليم العامة</h3>
-  <h3 data-en>General Education Goals</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-flag-checkered"></i></div>
+    <h3 data-ar>أهداف التعليم العامة</h3><h3 data-en>General Education Goals</h3>
+  </div>
   <ul>
-    <li data-ar>تعزيز مشاركة الأسرة في التحضير لمستقبل أبنائهم.</li><li data-en>Strengthen family engagement in preparing students’ futures.</li>
+    <li data-ar>تعزيز مشاركة الأسرة في التحضير لمستقبل أبنائهم.</li><li data-en>Strengthen family engagement for student futures.</li>
     <li data-ar>بناء رحلة تعليمية متكاملة.</li><li data-en>Build an integrated learning journey.</li>
-    <li data-ar>تحسين تكافؤ فرص الحصول على التعليم.</li><li data-en>Improve equity of access to education.</li>
+    <li data-ar>تحسين تكافؤ فرص الحصول على التعليم.</li><li data-en>Improve equity of access.</li>
     <li data-ar>تحسين مخرجات التعليم الأساسية.</li><li data-en>Improve core learning outcomes.</li>
-    <li data-ar>تحسين ترتيب المؤسسات التعليمية.</li><li data-en>Raise institutional standing.</li>
-    <li data-ar>توفير معرفة نوعية في المجالات ذات الأولوية.</li><li data-en>Provide high-quality knowledge in priority fields.</li>
-    <li data-ar>مواءمة مخرجات التعليم مع سوق العمل.</li><li data-en>Align education outputs with labor-market needs.</li>
+    <li data-ar>رفع ترتيب المؤسسات التعليمية.</li><li data-en>Raise institutional standing.</li>
+    <li data-ar>توفير معرفة نوعية في المجالات ذات الأولوية.</li><li data-en>Provide high-quality knowledge.</li>
+    <li data-ar>مواءمة المخرجات مع سوق العمل.</li><li data-en>Align outcomes with labor market.</li>
   </ul>
-  <h3 style="margin-top:26px" data-ar>أهداف سياسة التعليم في المملكة</h3>
-  <h3 style="margin-top:26px" data-en>Education Policy Goals in Saudi Arabia</h3>
-  <p class="lead" data-ar>سياسة التعليم في المملكة العربية السعودية جزء من رؤية تنموية شاملة للارتقاء بالتعليم عبر تعزيز القيم وبناء شخصية المتعلم ورفع الجودة وتوظيف التقنية وتنمية مهارات القرن الحادي والعشرين والمواءمة مع سوق العمل ورعاية الموهوبين والشراكة مع المجتمع.</p>
-  <p class="lead" data-en>Saudi education policy aims to elevate learning by strengthening values, building learner character, raising quality, leveraging technology, developing 21st-century skills, aligning with the labor market, nurturing gifted students, and partnering with the community.</p>
+
+  <div class="rib"></div>
+
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-landmark-flag"></i></div>
+    <h3 data-ar>سياسة التعليم في المملكة</h3><h3 data-en>Saudi Education Policy</h3>
+  </div>
+  <p class="lead" data-ar>ترسخ القيم، تبني شخصية المتعلم، ترفع الجودة، توظف التقنية، تنمّي مهارات القرن 21، وتوائم مع سوق العمل، وتدعم الموهوبين، وتعزز الشراكة المجتمعية.</p>
+  <p class="lead" data-en>Values, learner character, quality, technology integration, 21st-century skills, labor-market alignment, gifted support, and community partnership.</p>
 </section>
 
 <section id="ethics">
-  <h3 data-ar>ميثاق أخلاقيات المهنة</h3>
-  <h3 data-en>Code of Professional Ethics</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-scale-balanced"></i></div>
+    <h3 data-ar>ميثاق أخلاقيات المهنة</h3><h3 data-en>Code of Professional Ethics</h3>
+  </div>
+
   <div class="cv-card">
     <h4 data-ar>المادة الأولى: تعريفات</h4><h4 data-en>Article 1: Definitions</h4>
     <ul>
-      <li data-ar><b>أخلاقيات مهنة التعليم:</b> مبادئ وقيم وسلوكيات منظمة تلتزم بها الفئات التي تمارس هذه المهنة بما يحقق ثقافة مهنية عالية وجودة الممارسة ويحفظ حقوق الجميع.</li>
-      <li data-ar><b>المعلم:</b> عضو الهيئة التعليمية الذي ينهض بمسؤولية التعليم والتربية داخل المدرسة ويسهم في تطوير المتعلمين.</li>
-      <li data-ar><b>الطالب/الطالبة:</b> المتعلم في مدارس التعليم العام وما في حكمها.</li>
+      <li data-ar><b>أخلاقيات مهنة التعليم:</b> مبادئ وقيم منظمة تضمن جودة الممارسة وحقوق جميع الأطراف.</li>
+      <li data-ar><b>المعلم:</b> مسؤول التعليم والتربية وتنمية المتعلمين.</li>
+      <li data-ar><b>الطالب/الطالبة:</b> المتعلم في مدارس التعليم العام.</li>
     </ul>
   </div>
+
   <div class="cv-card">
-    <h4 data-ar>المادة الثانية: أهداف الميثاق</h4><h4 data-en>Article 2: Objectives</h4>
+    <h4 data-ar>المادة الثانية: الأهداف</h4><h4 data-en>Article 2: Objectives</h4>
     <ul>
-      <li data-ar>تعزيز انتماء المعلم لمهنته والارتقاء بها.</li>
-      <li data-ar>تطوير الأداء والتمكين المهني وفق معايير جودة.</li>
-      <li data-ar>المحافظة على شرف المهنة والالتزام بواجباتها.</li>
-      <li data-ar>حفظ حقوق أطراف العملية التعليمية ومسؤولياتهم.</li>
-      <li data-ar>إشاعة ثقافة مهنية أخلاقية لتحسين المخرجات.</li>
+      <li data-ar>تعزيز الانتماء للمهنة والسمو بها.</li>
+      <li data-ar>تمكين التطوير وفق معايير جودة.</li>
+      <li data-ar>حفظ الحقوق والواجبات.</li>
+      <li data-ar>إشاعة ثقافة مهنية أخلاقية.</li>
     </ul>
   </div>
+
   <div class="cv-card">
-    <h4 data-ar>المادة الثالثة: رسالة التعليم</h4><h4 data-en>Article 3: Mission of Education</h4>
-    <p data-ar>التعليم رسالة تستمد أخلاقها من هدي الشريعة ومبادئها، وتُعلي من قيم الإخلاص والعدل والرحمة... ويحافظ على سمعة المهنة وشرفها.</p>
+    <h4 data-ar>المادة الثالثة: رسالة التعليم</h4><h4 data-en>Article 3: Mission</h4>
+    <p data-ar>رسالة مستمدة من مبادئ الشريعة وقيم الإخلاص والعدل والرحمة، وصون سمعة المهنة.</p>
   </div>
+
   <div class="cv-card">
-    <h4 data-ar>المادة الرابعة: أدوار المعلم المهنية</h4><h4 data-en>Article 4: Teacher’s Professional Roles</h4>
+    <h4 data-ar>المادة الرابعة: أدوار المعلم</h4><h4 data-en>Article 4: Teacher’s Roles</h4>
     <ul>
-      <li data-ar>تطوير الأداء وتحديث الممارسات وتوظيف الاستراتيجيات والتقنيات المناسبة.</li>
-      <li data-ar>تهيئة بيئة صفية آمنة وجاذبة، وإدارة الوقت والصف بفعالية.</li>
-      <li data-ar>التعاون مع الأسرة والمجتمع المدرسي وتحليل النتائج وتوظيفها.</li>
-      <li data-ar>الالتزام بالأنظمة والقيم المهنية في جميع التعاملات.</li>
+      <li data-ar>تطوير الأداء وتحديث الاستراتيجيات والتقنيات.</li>
+      <li data-ar>تهيئة بيئة آمنة وجاذبة وإدارة فعالة.</li>
+      <li data-ar>التعاون مع الأسرة والمجتمع المدرسي وتحليل النتائج.</li>
+      <li data-ar>الالتزام بالأنظمة والقيم المهنية.</li>
     </ul>
   </div>
 </section>
 
 <section id="cv">
-  <h3 data-ar><i class="fa-solid fa-id-card"></i> السيرة الذاتية (CV)</h3>
-  <h3 data-en><i class="fa-solid fa-id-card"></i> Curriculum Vitae</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-id-card"></i></div>
+    <h3 data-ar>السيرة الذاتية</h3><h3 data-en>Curriculum Vitae</h3>
+  </div>
+
   <div class="cv-grid">
     <div class="cv-card">
       <h4 data-ar>البيانات الشخصية</h4><h4 data-en>Personal Details</h4>
@@ -341,19 +500,22 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
         <li data-ar>الهاتف: <b>0537379011</b></li><li data-en>Phone: <b>0537379011</b></li>
       </ul>
     </div>
+
     <div class="cv-card">
       <h4 data-ar>الملخص المهني</h4><h4 data-en>Professional Summary</h4>
-      <p data-ar>تأسيس لغة إنجليزية مبني على منهجيات تدرّج المهارات، التعلم النشط، التقويم البنائي، والتحليل الدوري للبيانات لمعالجة الفجوات.</p>
-      <p data-en>English foundations using skill-progression methods, active learning, formative assessment, and regular data analysis to close gaps.</p>
+      <p data-ar>تأسيس لغوي قائم على تدرّج المهارات، التعلم النشط، التقويم البنائي، وتحليل البيانات لسد الفجوات.</p>
+      <p data-en>Skill-progression literacy, active learning, formative assessment, and data reviews to close gaps.</p>
     </div>
+
     <div class="cv-card">
       <h4 data-ar>الخبرات العملية</h4><h4 data-en>Experience</h4>
       <ul>
-        <li data-ar>تدريس الصفوف المبكرة وتنفيذ برامج الدعم اللغوي.</li><li data-en>Taught early grades and led targeted English-support programs.</li>
-        <li data-ar>إعداد خطط وحدات دراسية وتنوع الاستراتيجيات.</li><li data-en>Prepared unit plans and diversified strategies.</li>
-        <li data-ar>تحليل النتائج وبناء خطط علاجية فردية.</li><li data-en>Analyzed results; built individual intervention plans.</li>
+        <li data-ar>تدريس الصفوف المبكرة وبرامج الدعم اللغوي.</li><li data-en>Early grades teaching; targeted English support.</li>
+        <li data-ar>إعداد وحدات دراسية واستراتيجيات متنوعة.</li><li data-en>Unit planning; diversified methodologies.</li>
+        <li data-ar>تحليل النتائج وبناء خطط علاجية فردية.</li><li data-en>Data analysis; individual interventions.</li>
       </ul>
     </div>
+
     <div class="cv-card">
       <h4 data-ar>التعليم والمؤهلات</h4><h4 data-en>Education</h4>
       <ul>
@@ -361,49 +523,27 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
       </ul>
     </div>
 
-    <!-- Clean, non-crowded credential cards -->
     <div class="cv-card">
       <h4 data-ar>الدورات والشهادات</h4><h4 data-en>Courses & Certificates</h4>
-
-      <!-- Arabic -->
       <ul class="kvs" data-ar>
-        <li>
-          <span class="tag">الرخصة المهنية التعليمية</span> (معلم ممارس)
-          <span class="meta">رقم الرخصة: <b>23100209305773</b> — التخصص: <b>اللغة الإنجليزية</b> — تاريخ الانتهاء: <b>2028/07/15</b></span>
-        </li>
-        <li>
-          <span class="tag">الحقيبة التأسيسية 1445هـ</span>
-          <span class="meta">مدة <b>20 ساعة</b> على <b>5 أيام</b> — عبر <b>Zoom</b> — من <b>1445-02-18</b> إلى <b>1445-02-22</b></span>
-        </li>
-        <li>
-          <span class="tag">ورشة أولمبياد اللغة الإنجليزية</span>
-          <span class="meta"><b>5 ساعات</b> تدريبية — التاريخ <b>1445-06-06</b></span>
-        </li>
+        <li><span class="tag">الرخصة المهنية التعليمية</span> (معلم ممارس) <span class="meta">رقم <b>23100209305773</b> — تخصص <b>اللغة الإنجليزية</b> — انتهاء <b>2028/07/15</b></span></li>
+        <li><span class="tag">الحقيبة التأسيسية 1445هـ</span> <span class="meta">20 ساعة / 5 أيام — عبر Zoom — 1445-02-18 → 1445-02-22</span></li>
+        <li><span class="tag">ورشة أولمبياد اللغة الإنجليزية</span> <span class="meta">5 ساعات تدريبية — 1445-06-06</span></li>
       </ul>
-
-      <!-- English -->
       <ul class="kvs" data-en>
-        <li>
-          <span class="tag">Educational Professional License</span> (Practitioner Teacher)
-          <span class="meta">License No. <b>23100209305773</b> — Major: <b>English Language</b> — Expiry: <b>2028/07/15</b></span>
-        </li>
-        <li>
-          <span class="tag">Foundational Pack (1445H)</span>
-          <span class="meta"><b>20 hours</b> over <b>5 days</b> — via <b>Zoom</b> — <b>1445-02-18</b> → <b>1445-02-22</b></span>
-        </li>
-        <li>
-          <span class="tag">English Olympiad Workshop</span>
-          <span class="meta"><b>5 training hours</b> — <b>1445-06-06</b></span>
-        </li>
+        <li><span class="tag">Educational Professional License</span> (Practitioner) <span class="meta">No. <b>23100209305773</b> — Major <b>English</b> — Exp. <b>2028/07/15</b></span></li>
+        <li><span class="tag">Foundational Pack (1445H)</span> <span class="meta">20 hours / 5 days — via Zoom — 1445-02-18 → 1445-02-22</span></li>
+        <li><span class="tag">English Olympiad Workshop</span> <span class="meta">5 training hours — 1445-06-06</span></li>
       </ul>
     </div>
   </div>
 </section>
 
-<!-- Certificates AFTER CV -->
 <section id="certificates">
-  <h3 data-ar><i class="fa-solid fa-award"></i> الشهادات الرسمية</h3>
-  <h3 data-en><i class="fa-solid fa-award"></i> Official Certificates</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-award"></i></div>
+    <h3 data-ar>الشهادات الرسمية</h3><h3 data-en>Official Certificates</h3>
+  </div>
   <div class="gallery">
     <div class="item"><img src="./pro_license.jpg"     alt="الرخصة المهنية – معلم ممارس" onclick="openImage(this.src,this.alt)"></div>
     <div class="item"><img src="./foundation_1445.jpg" alt="الحقيبة التأسيسية 1445هـ – 20 ساعة" onclick="openImage(this.src,this.alt)"></div>
@@ -411,68 +551,81 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   </div>
 </section>
 
-<!-- General Photo Gallery -->
 <section id="gallery">
-  <h3 data-ar><i class="fa-solid fa-image"></i> معرض الصور (الأنشطة والبرامج)</h3>
-  <h3 data-en><i class="fa-solid fa-image"></i> Photo Gallery (Activities & Programs)</h3>
-  <p class="lead" data-ar></p>
-  <p class="lead" data-en></p>
-  <div class="toolbar">
-    <label for="imgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور</span><span data-en>Upload Photos</span></label>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-image"></i></div>
+    <h3 data-ar>معرض الصور (الأنشطة والبرامج)</h3><h3 data-en>Photo Gallery (Activities & Programs)</h3>
+  </div>
+  <p class="lead" data-ar></p><p class="lead" data-en></p>
+
+  <!-- AUTH ONLY: Upload photos -->
+  <div class="toolbar auth-only">
+    <label for="imgInput" class="btn"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور</span><span data-en>Upload Photos</span></label>
     <input id="imgInput" type="file" multiple accept="image/*" hidden>
   </div>
+
   <div class="gallery" id="galleryGrid"></div>
 </section>
 
-<!-- General Videos -->
 <section id="videos">
-  <h3 data-ar><i class="fa-solid fa-video"></i> فيديوهات البرامج الداعمة</h3>
-  <h3 data-en><i class="fa-solid fa-video"></i> Support Program Videos</h3>
-  <p class="lead" data-ar></p>
-  <p class="lead" data-en></p>
-  <div class="toolbar">
-    <label for="vidInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات</span><span data-en>Upload Videos</span></label>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-video"></i></div>
+    <h3 data-ar>فيديوهات البرامج الداعمة</h3><h3 data-en>Support Program Videos</h3>
+  </div>
+  <p class="lead" data-ar></p><p class="lead" data-en></p>
+
+  <!-- AUTH ONLY: Upload videos -->
+  <div class="toolbar auth-only">
+    <label for="vidInput" class="btn"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات</span><span data-en>Upload Videos</span></label>
     <input id="vidInput" type="file" multiple accept="video/*" hidden>
   </div>
+
   <div class="videos-grid" id="videosGrid"></div>
 </section>
 
-<!-- Dedicated mixed media for the Support Program ONLY -->
 <section id="support-program">
-  <h3 data-ar><i class="fa-solid fa-layer-group"></i> برنامج التقوية صور/فيديو)</h3>
-  <h3 data-en><i class="fa-solid fa-layer-group"></i> Support Program </h3>
-  <p class="lead" data-ar></p>
-  <p class="lead" data-en></p>
-  <div class="toolbar">
-    <label for="spImgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور البرنامج</span><span data-en>Upload Program Photos</span></label>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-layer-group"></i></div>
+    <h3 data-ar>برنامج التقوية (صور/فيديو)</h3><h3 data-en>Support Program</h3>
+  </div>
+  <p class="lead" data-ar></p><p data-en class="lead"></p>
+
+  <!-- AUTH ONLY: Upload program media -->
+  <div class="toolbar auth-only">
+    <label for="spImgInput" class="btn"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور البرنامج</span><span data-en>Upload Program Photos</span></label>
     <input id="spImgInput" type="file" multiple accept="image/*" hidden>
-    <label for="spVidInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات البرنامج</span><span data-en>Upload Program Videos</span></label>
+    <label for="spVidInput" class="btn"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات البرنامج</span><span data-en>Upload Program Videos</span></label>
     <input id="spVidInput" type="file" multiple accept="video/*" hidden>
   </div>
+
   <div class="gallery" id="supportGrid"></div>
 </section>
 
 <section id="skills">
-  <h3 data-ar><i class="fa-solid fa-chalkboard-user"></i> مهارات التدريس</h3>
-  <h3 data-en><i class="fa-solid fa-chalkboard-user"></i> Teaching Skills</h3>
+  <div class="section-head">
+    <div class="badge"><i class="fa-solid fa-chalkboard-user"></i></div>
+    <h3 data-ar>مهارات التدريس</h3><h3 data-en>Teaching Skills</h3>
+  </div>
   <div class="skills-grid">
-    <div class="skill"><i class="fa-solid fa-spell-check"></i><h4 data-ar>الفونيمات والوعي الصوتي</h4><h4 data-en>Phonemic Awareness</h4><p data-ar>تمارين أصوات الحروف والمقاطع والدمج.</p><p data-en>Sound-letter work, blending & segmenting.</p></div>
-    <div class="skill"><i class="fa-solid fa-book-open-reader"></i><h4 data-ar>القراءة الموجَّهة</h4><h4 data-en>Guided Reading</h4><p data-ar>مجموعات مرنة وفق مستوى الطالبة.</p><p data-en>Flexible groups by reading level.</p></div>
-    <div class="skill"><i class="fa-solid fa-chalkboard"></i><h4 data-ar>الطرائق التواصلية</h4><h4 data-en>Communicative Approach</h4><p data-ar>محادثة وألعاب أدوار وأنشطة تواصل.</p><p data-en>Dialogue, role-play, communicative tasks.</p></div>
-    <div class="skill"><i class="fa-solid fa-person-chalkboard"></i><h4 data-ar>التعلّم النشط</h4><h4 data-en>Active Learning</h4><p data-ar>لعب تعليمي، محطات، تعلم تعاوني.</p><p data-en>Stations, games, cooperative work.</p></div>
-    <div class="skill"><i class="fa-solid fa-stairs"></i><h4 data-ar>التدرّج والدعم</h4><h4 data-en>Scaffolding & Differentiation</h4><p data-ar>تكييف الأنشطة وخطط فردية للمتعثرات.</p><p data-en>Tiered tasks & individual plans.</p></div>
-    <div class="skill"><i class="fa-solid fa-clipboard-check"></i><h4 data-ar>التقويم البنائي</h4><h4 data-en>Formative Assessment</h4><p data-ar>اختبارات قصيرة ومتابعة تقدّم أسبوعية.</p><p data-en>Checks for understanding & progress logs.</p></div>
-    <div class="skill"><i class="fa-solid fa-laptop-file"></i><h4 data-ar>أدوات Microsoft 365</h4><h4 data-en>Microsoft 365 Tools</h4><p data-ar>Teams وForms وOneDrive للتعلّم الرقمي.</p><p data-en>Teams, Forms & OneDrive.</p></div>
-    <div class="skill"><i class="fa-solid fa-people-arrows"></i><h4 data-ar>إدارة السلوك</h4><h4 data-en>Behavior Management</h4><p data-ar>روتينات صفية وتعزيز إيجابي.</p><p data-en>Clear routines & positive reinforcement.</p></div>
+    <div class="skill"><i class="fa-solid fa-spell-check"></i><h4 data-ar>الفونيمات والوعي الصوتي</h4><h4 data-en>Phonemic Awareness</h4><p data-ar>تمارين الأصوات والمقاطع والدمج.</p><p data-en>Sound-letter work, blending & segmenting.</p></div>
+    <div class="skill"><i class="fa-solid fa-book-open-reader"></i><h4 data-ar>القراءة الموجَّهة</h4><h4 data-en>Guided Reading</h4><p data-ar>مجموعات مرنة وفق مستوى الطالبة.</p><p data-en>Flexible groups by level.</p></div>
+    <div class="skill"><i class="fa-solid fa-chalkboard"></i><h4 data-ar>الطرائق التواصلية</h4><h4 data-en>Communicative Approach</h4><p data-ar>محادثة وألعاب أدوار وأنشطة تواصل.</p><p data-en>Dialogue, role-play, tasks.</p></div>
+    <div class="skill"><i class="fa-solid fa-person-chalkboard"></i><h4 data-ar>التعلّم النشط</h4><h4 data-en>Active Learning</h4><p data-ar>لعب تعليمي ومحطات وتعلم تعاوني.</p><p data-en>Stations, games, cooperative work.</p></div>
+    <div class="skill"><i class="fa-solid fa-stairs"></i><h4 data-ar>التدرّج والدعم</h4><h4 data-en>Scaffolding & Differentiation</h4><p data-ar>تكييف الأنشطة وخطط فردية.</p><p data-en>Tiered tasks & personal plans.</p></div>
+    <div class="skill"><i class="fa-solid fa-clipboard-check"></i><h4 data-ar>التقويم البنائي</h4><h4 data-en>Formative Assessment</h4><p data-ar>تحقق مستمر ومتابعة أسبوعية.</p><p data-en>Checks & progress logs.</p></div>
+    <div class="skill"><i class="fa-solid fa-laptop-file"></i><h4 data-ar>أدوات Microsoft 365</h4><h4 data-en>Microsoft 365 Tools</h4><p data-ar>Teams وForms وOneDrive.</p><p data-en>Teams, Forms & OneDrive.</p></div>
+    <div class="skill"><i class="fa-solid fa-people-arrows"></i><h4 data-ar>إدارة السلوك</h4><h4 data-en>Behavior Management</h4><p data-ar>روتينات وتعزيز إيجابي.</p><p data-en>Routines & reinforcement.</p></div>
   </div>
 </section>
 
 <section id="contact" style="text-align:center">
-  <h3 data-ar><i class="fa-solid fa-envelope"></i> تواصل</h3>
-  <h3 data-en><i class="fa-solid fa-envelope"></i> Contact</h3>
+  <div class="section-head" style="justify-content:center">
+    <div class="badge"><i class="fa-solid fa-envelope"></i></div>
+    <h3 data-ar>تواصل</h3><h3 data-en>Contact</h3>
+  </div>
   <p data-ar>البريد: <b>nawal.11418@hotmail.com</b> | الهاتف: <b>0537379011</b></p>
   <p data-en class="en">Email: <b>nawal.11418@hotmail.com</b> | Phone: <b>0537379011</b></p>
-  <img src="QR_NawalProfil.png" alt="QR" style="width:120px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.15)">
+  <img src="QR_NawalProfil.png" alt="QR" style="width:120px;border-radius:14px;border:1px solid var(--line);box-shadow:0 8px 22px rgba(31,102,209,.12)">
 </section>
 
 </main>
@@ -490,11 +643,11 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <div class="box"></div>
 </div>
 
-<!-- Auth Modal (email + password) -->
+<!-- Auth Modal -->
 <div id="authModal" class="modal">
   <div class="panel">
-    <h3 style="margin-top:0;color:#225e9b" data-ar>تسجيل الدخول</h3>
-    <h3 style="margin-top:0;color:#225e9b" data-en>Sign in</h3>
+    <h3 style="margin-top:0;color:#0d2b66" data-ar>تسجيل الدخول</h3>
+    <h3 style="margin-top:0;color:#0d2b66" data-en>Sign in</h3>
 
     <input id="emailInput" type="email" class="input" placeholder="email@example.com" style="margin-bottom:8px">
     <input id="passwordInput" type="password" class="input" placeholder="password" style="margin-bottom:8px">
@@ -506,7 +659,7 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
       <button id="closeAuth_en" class="btn secondary" data-en>Close</button>
     </div>
 
-    <p id="authMsg" class="note" style="margin-top:10px;color:#225e9b;font-weight:700"></p>
+    <p id="authMsg" class="note" style="margin-top:10px;color:#1e66d1;font-weight:700"></p>
   </div>
 </div>
 
@@ -549,29 +702,21 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ===== Lightbox ===== */
   const overlay = document.getElementById('overlay');
   const box = overlay.querySelector('.box');
-  function openImage(src, alt=''){
-    box.innerHTML=''; const big = new Image(); big.src=src; big.alt=alt;
-    overlay.classList.add('show'); box.appendChild(big);
-  }
-  function openVideo(src){
-    box.innerHTML=''; const vv=document.createElement('video'); vv.src=src; vv.controls=true; vv.autoplay=true;
-    overlay.classList.add('show'); box.appendChild(vv);
-  }
-  window.openImage = openImage;
-  window.openVideo = openVideo;
+  function openImage(src, alt=''){ box.innerHTML=''; const big = new Image(); big.src=src; big.alt=alt; overlay.classList.add('show'); box.appendChild(big); }
+  function openVideo(src){ box.innerHTML=''; const vv=document.createElement('video'); vv.src=src; vv.controls=true; vv.autoplay=true; overlay.classList.add('show'); box.appendChild(vv); }
+  window.openImage = openImage; window.openVideo = openVideo;
 
   /* ===== Supabase Setup ===== */
-  // Replace with your own project/keys if needed.
   const SUPABASE_URL = 'https://gajjdgibcddjdkyvmrsn.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhampkZ2liY2RkamRreXZtcnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzQ0ODAsImV4cCI6MjA3NzIxMDQ4MH0.bZEq1j0iizxlWJmlpIETrvbSa2sgZU-7TNoD4Hb3QMg';
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const MEDIA_BUCKET = 'mida';
-  const BASE_PATH   = 'nawal';                 // general: nawal/images, nawal/videos
+  const BASE_PATH   = 'nawal';
   const SUPPORT_IMG_PATH = 'nawal/support/images';
   const SUPPORT_VID_PATH = 'nawal/support/videos';
 
-  // UI
+  // UI elements
   const authModal = document.getElementById('authModal');
   const emailInput = document.getElementById('emailInput');
   const passwordInput = document.getElementById('passwordInput');
@@ -585,11 +730,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showAuth(show){ authModal.classList.toggle('show', !!show); }
   function setMsg(t){ msg.textContent = t || ''; }
-  function filePath(type, name){ return `${BASE_PATH}/${type}/${Date.now()}_${name}`; }
-  function publicUrl(path){ return supabaseClient.storage.from(MEDIA_BUCKET).getPublicUrl(path).data.publicUrl; }
 
-  loginBtn.onclick = ()=> showAuth(true);
-  closeAuth.onclick = closeAuth_en.onclick = ()=> showAuth(false);
+  loginBtn?.addEventListener('click', ()=> showAuth(true));
+  closeAuth?.addEventListener('click', ()=> showAuth(false));
+  closeAuth_en?.addEventListener('click', ()=> showAuth(false));
 
   async function signInWithPassword(){
     const email = (emailInput.value||'').trim();
@@ -597,25 +741,27 @@ document.addEventListener('DOMContentLoaded', () => {
     if(!email || !password){ setMsg('أدخلي الإيميل وكلمة المرور / Enter email & password'); return; }
     const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
     if(error){ setMsg('خطأ: ' + error.message); return; }
-    setMsg('تم تسجيل الدخول ✓');
-    showAuth(false);
+    setMsg('تم تسجيل الدخول ✓'); showAuth(false);
     uiSigned(await getUser());
   }
-  signInBtn.onclick = signInBtn_en.onclick = signInWithPassword;
+  signInBtn?.addEventListener('click', signInWithPassword);
+  signInBtn_en?.addEventListener('click', signInWithPassword);
 
-  logoutBtn.onclick = async ()=>{
-    await supabaseClient.auth.signOut();
-    setMsg('تم تسجيل الخروج');
-    uiSigned(null);
-  };
+  logoutBtn?.addEventListener('click', async ()=>{
+    await supabaseClient.auth.signOut(); setMsg('تم تسجيل الخروج'); uiSigned(null);
+  });
 
   async function getUser(){
     const { data } = await supabaseClient.auth.getUser();
     return data?.user ?? null;
   }
   function uiSigned(user){
-    logoutBtn.style.display = user ? 'inline-block' : 'none';
+    document.body.classList.toggle('auth-on', !!user);
   }
+
+  /* ===== Storage helpers ===== */
+  function filePath(type, name){ return `${BASE_PATH}/${type}/${Date.now()}_${name}`; }
+  function publicUrl(path){ return supabaseClient.storage.from(MEDIA_BUCKET).getPublicUrl(path).data.publicUrl; }
 
   async function listFiles(type){
     const path = `${BASE_PATH}/${type}`;
@@ -658,14 +804,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const supportGrid = document.getElementById('supportGrid');
 
   function renderImages(list){
-    if(!list.length){
-      gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>';
-      return;
-    }
+    if(!list.length){ gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>'; return; }
     gGrid.innerHTML = list.map(it=>`
       <div class="item">
         <img src="${it.url}" alt="${it.name}">
-        <div class="card-actions">
+        <div class="card-actions auth-only">
           <button class="icon-btn" data-del="${it.path}" title="حذف / Delete"><i class="fa-solid fa-trash"></i></button>
           <a class="icon-btn" href="${it.url}" download title="تنزيل / Download"><i class="fa-solid fa-download"></i></a>
         </div>
@@ -675,14 +818,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function renderVideos(list){
-    if(!list.length){
-      vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>';
-      return;
-    }
+    if(!list.length){ vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>'; return; }
     vGrid.innerHTML = list.map(it=>`
       <div class="video-card">
         <div class="video-wrap"><video src="${it.url}" controls></video></div>
-        <div class="card-actions" style="position:absolute;top:12px;inset-inline-end:12px">
+        <div class="card-actions auth-only" style="position:absolute;top:12px;inset-inline-end:12px">
           <button class="icon-btn" data-del="${it.path}" title="حذف / Delete"><i class="fa-solid fa-trash"></i></button>
           <a class="icon-btn" href="${it.url}" download title="تنزيل / Download"><i class="fa-solid fa-download"></i></a>
         </div>
@@ -700,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
       '<p style="grid-column:1/-1;color:#64748b"></p>';
   }
 
-  // Inputs
+  // Inputs (auth-only already handled by CSS)
   document.getElementById('imgInput')?.addEventListener('change', (e)=>uploadMany('images', e.target.files));
   document.getElementById('vidInput')?.addEventListener('change', (e)=>uploadMany('videos', e.target.files));
   document.getElementById('spImgInput')?.addEventListener('change', (e)=>uploadManyAt(SUPPORT_IMG_PATH, e.target.files));
