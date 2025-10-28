@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -108,6 +107,10 @@ footer .en{font-family:'Poppins',sans-serif;font-weight:500;color:#444}
 .modal .panel{background:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:20px;min-width:320px;max-width:90vw}
 .modal.show{display:flex}
 .input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
+
+/* ==== AUTH-VISIBILITY: hide upload toolbars unless logged in ==== */
+.auth-only{display:none}
+body.auth-on .auth-only{display:flex}
 
 /* ===== Mobile header polish (fix crowding on small phones) ===== */
 @media (max-width: 680px){
@@ -417,7 +420,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <h3 data-en><i class="fa-solid fa-image"></i> Photo Gallery (Activities & Programs)</h3>
   <p class="lead" data-ar></p>
   <p class="lead" data-en></p>
-  <div class="toolbar">
+  <!-- AUTH ONLY -->
+  <div class="toolbar auth-only">
     <label for="imgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور</span><span data-en>Upload Photos</span></label>
     <input id="imgInput" type="file" multiple accept="image/*" hidden>
   </div>
@@ -430,7 +434,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <h3 data-en><i class="fa-solid fa-video"></i> Support Program Videos</h3>
   <p class="lead" data-ar></p>
   <p class="lead" data-en></p>
-  <div class="toolbar">
+  <!-- AUTH ONLY -->
+  <div class="toolbar auth-only">
     <label for="vidInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات</span><span data-en>Upload Videos</span></label>
     <input id="vidInput" type="file" multiple accept="video/*" hidden>
   </div>
@@ -443,7 +448,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <h3 data-en><i class="fa-solid fa-layer-group"></i> Support Program </h3>
   <p class="lead" data-ar></p>
   <p class="lead" data-en></p>
-  <div class="toolbar">
+  <!-- AUTH ONLY -->
+  <div class="toolbar auth-only">
     <label for="spImgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور البرنامج</span><span data-en>Upload Program Photos</span></label>
     <input id="spImgInput" type="file" multiple accept="image/*" hidden>
     <label for="spVidInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات البرنامج</span><span data-en>Upload Program Videos</span></label>
@@ -615,6 +621,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   function uiSigned(user){
     logoutBtn.style.display = user ? 'inline-block' : 'none';
+    // Toggle body class to show/hide upload toolbars
+    document.body.classList.toggle('auth-on', !!user);
   }
 
   async function listFiles(type){
