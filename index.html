@@ -438,9 +438,9 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 
 <!-- Dedicated mixed media for the Support Program ONLY -->
 <section id="support-program">
-  <h3 data-ar><i class="fa-solid fa-layer-group"></i> البرنامج التقوية صور/فيديو)</h3>
+  <h3 data-ar><i class="fa-solid fa-layer-group"></i> برنامج التقوية صور/فيديو)</h3>
   <h3 data-en><i class="fa-solid fa-layer-group"></i> Support Program </h3>
-  <p class="lead" data-ar>)</p>
+  <p class="lead" data-ar></p>
   <p class="lead" data-en></p>
   <div class="toolbar">
     <label for="spImgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور البرنامج</span><span data-en>Upload Program Photos</span></label>
@@ -658,7 +658,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderImages(list){
     if(!list.length){
-      gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b">لا توجد صور بعد — ارفعي صور الأنشطة من زر "رفع صور". / No photos yet — use Upload Photos.</p>';
+      gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b">". / No photos yet — use Upload Photos.</p>';
       return;
     }
     gGrid.innerHTML = list.map(it=>`
@@ -675,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderVideos(list){
     if(!list.length){
-      vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b">لا توجد فيديوهات بعد — ارفعي فيديو البرنامج الداعم. / No videos yet — upload your support-program video.</p>';
+      vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>';
       return;
     }
     vGrid.innerHTML = list.map(it=>`
@@ -696,7 +696,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imgs.forEach(it=>cards.push(`<div class="item"><img src="${it.url}" alt="${it.name}" onclick="openImage(this.src,this.alt)"></div>`));
     vids.forEach(it=>cards.push(`<div class="video-card"><div class="video-wrap"><video src="${it.url}" controls></video></div></div>`));
     supportGrid.innerHTML = cards.length ? cards.join('') :
-      '<p style="grid-column:1/-1;color:#64748b">ارفع وسائط البرنامج لتظهر هنا. / Upload support-program media here.</p>';
+      '<p style="grid-column:1/-1;color:#64748b"> / Upload support-program media here.</p>';
   }
 
   // Inputs
