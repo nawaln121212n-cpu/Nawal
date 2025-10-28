@@ -650,13 +650,7 @@ document.addEventListener('DOMContentLoaded', () => {
     await supabaseClient.storage.from(MEDIA_BUCKET).remove([path]);
     loadMedia();
   }
-function uiSigned(user){
-  logoutBtn.style.display = user ? 'inline-block' : 'none';
-  // hide toolbars for guests
-  document.querySelectorAll('.toolbar').forEach(tb=>{
-    tb.style.display = user ? 'flex' : 'none';
-  });
-}
+
   // Renderers
   const gGrid = document.getElementById('galleryGrid');
   const vGrid = document.getElementById('videosGrid');
