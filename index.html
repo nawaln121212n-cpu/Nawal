@@ -108,7 +108,7 @@ footer .en{font-family:'Poppins',sans-serif;font-weight:500;color:#444}
 .modal.show{display:flex}
 .input{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:10px}
 
-/* ===== Mobile header polish (fix crowding on small phones) ===== */
+/* ===== Mobile header polish ===== */
 @media (max-width: 680px){
   .topbar .row{grid-template-columns:auto 1fr;gap:8px}
   .brand{font-size:18px;max-width:48vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -190,6 +190,13 @@ footer .en{font-family:'Poppins',sans-serif;font-weight:500;color:#444}
 }
 section ul{padding-inline-start:1.2em}
 section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
+
+/* ====== >>> ADDED: Manage-mode visibility rules ====== */
+.toolbar,
+.card-actions { display: none !important; }           /* Hidden for visitors */
+.can-manage .toolbar,
+.can-manage .card-actions { display: flex !important;} /* Show for admins / ?manage */
+.card-actions .icon-btn { padding: 6px 8px; border-radius: 10px; } /* (optional nicer) */
 </style>
 </head>
 <body class="lang-ar">
@@ -360,11 +367,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
       </ul>
     </div>
 
-    <!-- Clean, non-crowded credential cards -->
     <div class="cv-card">
       <h4 data-ar>الدورات والشهادات</h4><h4 data-en>Courses & Certificates</h4>
-
-      <!-- Arabic -->
       <ul class="kvs" data-ar>
         <li>
           <span class="tag">الرخصة المهنية التعليمية</span> (معلم ممارس)
@@ -379,8 +383,6 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
           <span class="meta"><b>5 ساعات</b> تدريبية — التاريخ <b>1445-06-06</b></span>
         </li>
       </ul>
-
-      <!-- English -->
       <ul class="kvs" data-en>
         <li>
           <span class="tag">Educational Professional License</span> (Practitioner Teacher)
@@ -404,6 +406,7 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <h3 data-ar><i class="fa-solid fa-award"></i> الشهادات الرسمية</h3>
   <h3 data-en><i class="fa-solid fa-award"></i> Official Certificates</h3>
   <div class="gallery">
+    <!-- NOTE: make sure these image files actually exist in the same folder or use correct paths -->
     <div class="item"><img src="./pro_license.jpg"     alt="الرخصة المهنية – معلم ممارس" onclick="openImage(this.src,this.alt)"></div>
     <div class="item"><img src="./foundation_1445.jpg" alt="الحقيبة التأسيسية 1445هـ – 20 ساعة" onclick="openImage(this.src,this.alt)"></div>
     <div class="item"><img src="./olympiad_ws.jpg"     alt="ورشة أولمبياد اللغة الإنجليزية – 5 ساعات" onclick="openImage(this.src,this.alt)"></div>
@@ -560,7 +563,6 @@ document.addEventListener('DOMContentLoaded', () => {
   window.openVideo = openVideo;
 
   /* ===== Supabase Setup ===== */
-  // Replace with your own project/keys if needed.
   const SUPABASE_URL = 'https://gajjdgibcddjdkyvmrsn.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhampkZ2liY2RkamRreXZtcnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzQ0ODAsImV4cCI6MjA3NzIxMDQ4MH0.bZEq1j0iizxlWJmlpIETrvbSa2sgZU-7TNoD4Hb3QMg';
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -584,6 +586,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function showAuth(show){ authModal.classList.toggle('show', !!show); }
   function setMsg(t){ msg.textContent = t || ''; }
+
+  /* >>> ADDED: helper to flip manage mode */
+  function setManageMode(on) {
+    document.body.classList.toggle('can-manage', !!on);
+  }
+
   function filePath(type, name){ return `${BASE_PATH}/${type}/${Date.now()}_${name}`; }
   function publicUrl(path){ return supabaseClient.storage.from(MEDIA_BUCKET).getPublicUrl(path).data.publicUrl; }
 
@@ -612,8 +620,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const { data } = await supabaseClient.auth.getUser();
     return data?.user ?? null;
   }
+
+  /* >>> CHANGED: also toggles manage mode */
   function uiSigned(user){
     logoutBtn.style.display = user ? 'inline-block' : 'none';
+    // Show admin controls if logged in OR URL has ?manage
+    setManageMode(!!user || hasManageParam);
   }
 
   async function listFiles(type){
@@ -705,6 +717,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('spImgInput')?.addEventListener('change', (e)=>uploadManyAt(SUPPORT_IMG_PATH, e.target.files));
   document.getElementById('spVidInput')?.addEventListener('change', (e)=>uploadManyAt(SUPPORT_VID_PATH, e.target.files));
 
+  /* >>> ADDED: read ?manage once */
+  const hasManageParam = new URLSearchParams(location.search).has('manage');
+  if (hasManageParam) setManageMode(true); // show controls even before login
+
   // Init
   async function loadMedia(){
     const [imgs, vids, sImgs, sVids] = await Promise.all([
@@ -716,10 +732,20 @@ document.addEventListener('DOMContentLoaded', () => {
     renderImages(imgs);
     renderVideos(vids);
     renderSupportMixed(sImgs, sVids);
-    uiSigned(await getUser());
   }
-  supabaseClient.auth.onAuthStateChange(()=>{ showAuth(false); loadMedia(); });
-  loadMedia();
+
+  // Keep UI in sync with auth changes
+  supabaseClient.auth.onAuthStateChange(async ()=>{
+    showAuth(false);
+    await loadMedia();
+    uiSigned(await getUser());   // >>> ADDED
+  });
+
+  // First paint
+  (async () => {
+    await loadMedia();
+    uiSigned(await getUser());   // >>> ADDED
+  })();
 });
 </script>
 </body>
