@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -404,9 +405,9 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
   <h3 data-ar><i class="fa-solid fa-award"></i> الشهادات الرسمية</h3>
   <h3 data-en><i class="fa-solid fa-award"></i> Official Certificates</h3>
   <div class="gallery">
-    <div class="item"><img src="certs/pro_license.jpg" alt="الرخصة المهنية – معلم ممارس" onclick="openImage(this.src,this.alt)"></div>
-    <div class="item"><img src="certs/foundation_1445.jpg" alt="الحقيبة التأسيسية 1445هـ – 20 ساعة" onclick="openImage(this.src,this.alt)"></div>
-    <div class="item"><img src="certs/olympiad_ws.jpg" alt="ورشة أولمبياد اللغة الإنجليزية – 5 ساعات" onclick="openImage(this.src,this.alt)"></div>
+    <div class="item"><img src="./pro_license.jpg"     alt="الرخصة المهنية – معلم ممارس" onclick="openImage(this.src,this.alt)"></div>
+    <div class="item"><img src="./foundation_1445.jpg" alt="الحقيبة التأسيسية 1445هـ – 20 ساعة" onclick="openImage(this.src,this.alt)"></div>
+    <div class="item"><img src="./olympiad_ws.jpg"     alt="ورشة أولمبياد اللغة الإنجليزية – 5 ساعات" onclick="openImage(this.src,this.alt)"></div>
   </div>
 </section>
 
@@ -414,8 +415,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 <section id="gallery">
   <h3 data-ar><i class="fa-solid fa-image"></i> معرض الصور (الأنشطة والبرامج)</h3>
   <h3 data-en><i class="fa-solid fa-image"></i> Photo Gallery (Activities & Programs)</h3>
-  <p class="lead" data-ar>ارفعي الصور من زر "رفع صور"، ستظهر تلقائيًا هنا.</p>
-  <p class="lead" data-en>Upload photos via the button below—they’ll appear here automatically.</p>
+  <p class="lead" data-ar></p>
+  <p class="lead" data-en></p>
   <div class="toolbar">
     <label for="imgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور</span><span data-en>Upload Photos</span></label>
     <input id="imgInput" type="file" multiple accept="image/*" hidden>
@@ -427,8 +428,8 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 <section id="videos">
   <h3 data-ar><i class="fa-solid fa-video"></i> فيديوهات البرامج الداعمة</h3>
   <h3 data-en><i class="fa-solid fa-video"></i> Support Program Videos</h3>
-  <p class="lead" data-ar>ارفعي مقاطع الفيديو للبرامج الداعمة للمتعثرين لغويًا ليتم عرضها هنا.</p>
-  <p class="lead" data-en>Upload videos from your English-support program—displayed below.</p>
+  <p class="lead" data-ar></p>
+  <p class="lead" data-en></p>
   <div class="toolbar">
     <label for="vidInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع فيديوهات</span><span data-en>Upload Videos</span></label>
     <input id="vidInput" type="file" multiple accept="video/*" hidden>
@@ -438,10 +439,10 @@ section li{list-style:disc inside; line-height:1.9; overflow-wrap:anywhere}
 
 <!-- Dedicated mixed media for the Support Program ONLY -->
 <section id="support-program">
-  <h3 data-ar><i class="fa-solid fa-layer-group"></i> البرنامج الداعم (صور + فيديو)</h3>
-  <h3 data-en><i class="fa-solid fa-layer-group"></i> Support Program (Mixed)</h3>
-  <p class="lead" data-ar>هذا القسم خاص ببرامج دعم الطالبات المتعثرات في اللغة الإنجليزية. ارفعي صور وفيديوهات البرنامج هنا (منفصلة عن المعرض العام).</p>
-  <p class="lead" data-en>Dedicated area for the English-support program. Upload photos & videos here (separate from the general galleries).</p>
+  <h3 data-ar><i class="fa-solid fa-layer-group"></i> برنامج التقوية صور/فيديو)</h3>
+  <h3 data-en><i class="fa-solid fa-layer-group"></i> Support Program </h3>
+  <p class="lead" data-ar></p>
+  <p class="lead" data-en></p>
   <div class="toolbar">
     <label for="spImgInput" class="btn ghost"><i class="fa-solid fa-upload"></i> <span data-ar>رفع صور البرنامج</span><span data-en>Upload Program Photos</span></label>
     <input id="spImgInput" type="file" multiple accept="image/*" hidden>
@@ -561,8 +562,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ===== Supabase Setup ===== */
   // Replace with your own project/keys if needed.
-  const SUPABASE_URL = 'https://nsrldglsufxefbnsprlo.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5zcmxkZ2xzdWZ4ZWZibnNwcmxvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE0OTg5ODQsImV4cCI6MjA3NzA3NDk4NH0.wW5QciXJx9mKFYBEEmJYPoeS9t3v4lY-wUEws_BZuRk';
+  const SUPABASE_URL = 'https://gajjdgibcddjdkyvmrsn.supabase.co';
+  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdhampkZ2liY2RkamRreXZtcnNuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjE2MzQ0ODAsImV4cCI6MjA3NzIxMDQ4MH0.bZEq1j0iizxlWJmlpIETrvbSa2sgZU-7TNoD4Hb3QMg';
   const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const MEDIA_BUCKET = 'mida';
@@ -658,7 +659,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderImages(list){
     if(!list.length){
-      gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b">لا توجد صور بعد — ارفعي صور الأنشطة من زر "رفع صور". / No photos yet — use Upload Photos.</p>';
+      gGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>';
       return;
     }
     gGrid.innerHTML = list.map(it=>`
@@ -675,7 +676,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function renderVideos(list){
     if(!list.length){
-      vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b">لا توجد فيديوهات بعد — ارفعي فيديو البرنامج الداعم. / No videos yet — upload your support-program video.</p>';
+      vGrid.innerHTML = '<p style="grid-column:1/-1;color:#64748b"></p>';
       return;
     }
     vGrid.innerHTML = list.map(it=>`
@@ -696,7 +697,7 @@ document.addEventListener('DOMContentLoaded', () => {
     imgs.forEach(it=>cards.push(`<div class="item"><img src="${it.url}" alt="${it.name}" onclick="openImage(this.src,this.alt)"></div>`));
     vids.forEach(it=>cards.push(`<div class="video-card"><div class="video-wrap"><video src="${it.url}" controls></video></div></div>`));
     supportGrid.innerHTML = cards.length ? cards.join('') :
-      '<p style="grid-column:1/-1;color:#64748b">ارفع وسائط البرنامج لتظهر هنا. / Upload support-program media here.</p>';
+      '<p style="grid-column:1/-1;color:#64748b"></p>';
   }
 
   // Inputs
